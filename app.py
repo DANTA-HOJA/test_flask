@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, request
+from flask import Flask, redirect, request
 
 app = Flask(
     __name__,
@@ -17,6 +17,20 @@ def getSum():
         result+=n
     return f"結果：{str(result)}"
 
+@app.route("/en")
+def index_en():
+    return json.dumps({
+            "status": "ok",
+            "text": "Hello, flask"
+    })
+
+@app.route("/zh")
+def index_zh():
+    return json.dumps({
+            "status": "ok",
+            "text": "你好，Flask"
+        }, ensure_ascii=False)
+
 @app.route("/")
 def index():
     print("請求方法：", request.method)
@@ -29,15 +43,9 @@ def index():
     print("引薦網址：", request.headers.get("referrer"))
     lang = request.headers.get("accept-language")
     if lang.startswith("en"):
-        return json.dumps({
-            "status": "ok",
-            "text": "Hello, flask"
-        })
+        return redirect("/en")
     else:
-        return json.dumps({
-            "status": "ok",
-            "text": "你好，Flask"
-        }, ensure_ascii=False)
+        return redirect("/zh")
 
 
 @app.route("/data")
