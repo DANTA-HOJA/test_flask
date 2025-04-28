@@ -1,11 +1,21 @@
-from flask import Flask
-from flask import request
+import json
+
+from flask import Flask, request
 
 app = Flask(
     __name__,
     static_folder="public",
     static_url_path="/"
 )
+
+@app.route("/getSum")
+def getSum():
+    max = int(request.args.get("max", 100))
+    min = int(request.args.get("min", 1))
+    result = 0
+    for n in range(min, max+1):
+        result+=n
+    return f"結果：{str(result)}"
 
 @app.route("/")
 def index():
@@ -19,10 +29,16 @@ def index():
     print("引薦網址：", request.headers.get("referrer"))
     lang = request.headers.get("accept-language")
     if lang.startswith("en"):
-        return "Hello, flask"
+        return json.dumps({
+            "status": "ok",
+            "text": "Hello, flask"
+        })
     else:
-        return "你好，Flask"
-    
+        return json.dumps({
+            "status": "ok",
+            "text": "你好，Flask"
+        }, ensure_ascii=False)
+
 
 @app.route("/data")
 def handleData():
