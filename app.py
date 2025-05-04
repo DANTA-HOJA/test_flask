@@ -1,6 +1,6 @@
 import json
 
-from flask import Flask, redirect, request
+from flask import Flask, redirect, render_template, request
 
 app = Flask(
     __name__,
@@ -26,10 +26,11 @@ def index_en():
 
 @app.route("/zh")
 def index_zh():
-    return json.dumps({
-            "status": "ok",
-            "text": "你好，Flask"
-        }, ensure_ascii=False)
+    return render_template("index", name="小明")
+    # return json.dumps({
+    #         "status": "ok",
+    #         "text": "你好，Flask"
+    #     }, ensure_ascii=False)
 
 @app.route("/")
 def index():
