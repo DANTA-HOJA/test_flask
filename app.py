@@ -26,7 +26,7 @@ def index_en():
 
 @app.route("/zh")
 def index_zh():
-    return render_template("index", name="小明")
+    return render_template("index.html", name="小明")
     # return json.dumps({
     #         "status": "ok",
     #         "text": "你好，Flask"
@@ -47,6 +47,10 @@ def index():
         return redirect("/en")
     else:
         return redirect("/zh")
+
+@app.route("/page")
+def page():
+    return render_template("page.html")
 
 
 @app.route("/data")
