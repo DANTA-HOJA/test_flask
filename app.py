@@ -48,6 +48,19 @@ def index():
     else:
         return redirect("/zh")
 
+@app.route("/calculate")
+def calculate():
+    maxNumber = int(request.args.get("max", 0))
+    result = 0
+    for n in range(1, maxNumber+1):
+        result+=n
+    return render_template("result_page.html", data=result)
+
+@app.route("/show")
+def show():
+    name = request.args.get("n", "")
+    return f"歡迎光臨，{name}"
+
 @app.route("/page")
 def page():
     return render_template("page.html")
