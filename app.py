@@ -48,9 +48,12 @@ def index():
     else:
         return redirect("/zh")
 
-@app.route("/calculate")
+@app.route("/calculate", methods=["POST"])
 def calculate():
-    maxNumber = int(request.args.get("max", 0))
+    # GET 寫法
+    # maxNumber = int(request.args.get("max", 0))
+    # POST 寫法
+    maxNumber = int(request.form["max"])
     result = 0
     for n in range(1, maxNumber+1):
         result+=n
