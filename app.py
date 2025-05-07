@@ -1,12 +1,13 @@
 import json
-
-from flask import Flask, redirect, render_template, request
+import custom_var
+from flask import Flask, redirect, render_template, request, session
 
 app = Flask(
     __name__,
     static_folder="public",
     static_url_path="/"
 )
+app.secret_key = custom_var.secret_key # session 的密鑰
 
 @app.route("/getSum")
 def getSum():
@@ -47,6 +48,15 @@ def index():
         return redirect("/en")
     else:
         return redirect("/zh")
+
+@app.route("/hello")
+def hello():
+    session["username"] = request.args.get("name", "")
+    return f"你好，{session['username']}"
+
+@app.route("/talk")
+def talk():
+    return f"{session['username']}，很高興見到你"
 
 @app.route("/calculate", methods=["POST"])
 def calculate():
