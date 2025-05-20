@@ -13,11 +13,21 @@ except Exception as e:
     print(e)
 
 db = client.website # 選擇操作 test 的資料庫 (不存在的話會創建一個)
-collection = db.members # 選擇操作 users 集合
+collection = db.users # 選擇操作 users 集合
 
 # 把資料新增到集合中
-collection.insert_one({
-    "email": "abc@abc.com",
-    "password": "abc",
-})
+result = collection.insert_many(
+    [{
+        "name": "洛可可",
+        "email": "rococo@wuwa.com",
+        "password": "rocaille",
+        "level": 3
+    },{
+        "name": "椿",
+        "email": "tsubaki@wuwa.com",
+        "password": "camellia",
+        "level": 2
+    }]
+)
 print("資料新增成功")
+print(result.inserted_ids)
